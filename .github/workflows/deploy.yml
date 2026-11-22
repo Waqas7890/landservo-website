@@ -35,6 +35,26 @@ jobs:
           assert not big, 'files over 50 MB: put APKs in GitHub Releases'
           print('Site checks passed')
           PY
+      - name: Assemble APK from upload parts and verify its SHA-256
+        run: |
+          set -e
+          if ls downloads/*.part* >/dev/null 2>&1; then
+            for base in $(ls downloads/*.part* | sed -E 's/\.part[0-9]+$//' | sort -u); do
+              cat $(ls "$base".part* | sort) > "$base"
+              rm "$base".part*
+            done
+          fi
+          python3 - <<'PY'
+          import json, hashlib, os, sys
+          v = json.load(open('version.json'))
+          url = v.get('apk_url', '')
+          if url.startswith('https://landservo.online/'):
+              path = url[len('https://landservo.online/'):]
+              assert os.path.exists(path), path + ' missing'
+              digest = hashlib.sha256(open(path, 'rb').read()).hexdigest()
+              assert digest == v['sha256'].lower(), 'APK checksum mismatch: ' + digest
+              print('APK verified', path, digest)
+          PY
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
