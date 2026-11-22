@@ -4,8 +4,8 @@
   "build": 45,
   "released": "2026-11-22",
   "min_android": "8.0",
-  "apk_url": "",
-  "sha256": "",
+  "apk_url": "https://landservo.online/downloads/LandSurvo-v4.5.apk",
+  "sha256": "de00f2c0e476ce96c66e8fc3476299567a261b695e9a57dd46139cc4b73bc294",
   "notes_en": [
     "Faster maps: large KML files open in seconds",
     "Steadier GPS position while standing still",
@@ -15,5 +15,6 @@
     "تیز نقشے: بڑی KML فائلیں سیکنڈوں میں",
     "کھڑے ہونے پر زیادہ مستحکم جی پی ایس",
     "اسٹیک آؤٹ کے لیے نئی پُرسکون آواز"
-  ]
+  ],
+  "size_mb": 6.58
 }
