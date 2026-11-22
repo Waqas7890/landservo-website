@@ -1,0 +1,50 @@
+# Every push to main is checked, then published to https://landservo.online
+name: Check & deploy site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate site before it goes live
+        run: |
+          set -e
+          python3 - <<'PY'
+          import json, re, os, sys
+          v = json.load(open('version.json'))
+          assert re.fullmatch(r'\d+(\.\d+)*', v['version']), 'version must look like 4.5'
+          url = v.get('apk_url', '')
+          assert url == '' or re.match(r'^https://(github\.com/Waqas7890/|landservo\.online/)', url), 'apk_url must be on GitHub/landservo.online'
+          sha = v.get('sha256', '')
+          assert sha == '' or re.fullmatch(r'[a-fA-F0-9]{64}', sha), 'sha256 must be 64 hex chars'
+          for f in ['index.html', 'tutorial.html', 'CNAME', 'assets/js/main.js', 'assets/js/three.min.js']:
+              assert os.path.exists(f), f + ' missing'
+          for f in ['index.html', 'tutorial.html']:
+              assert 'Content-Security-Policy' in open(f, encoding='utf-8').read(), f + ' lost its security policy'
+          big = [p for p, _, fs in os.walk('.') for f in fs if '.git' not in p and os.path.getsize(os.path.join(p, f)) > 50_000_000]
+          assert not big, 'files over 50 MB: put APKs in GitHub Releases'
+          print('Site checks passed')
+          PY
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
