@@ -1,0 +1,19 @@
+{
+  "app": "Land Survo",
+  "version": "4.5",
+  "build": 45,
+  "released": "2026-11-22",
+  "min_android": "8.0",
+  "apk_url": "",
+  "sha256": "",
+  "notes_en": [
+    "Faster maps: large KML files open in seconds",
+    "Steadier GPS position while standing still",
+    "New calm voice for stakeout guidance"
+  ],
+  "notes_ur": [
+    "تیز نقشے: بڑی KML فائلیں سیکنڈوں میں",
+    "کھڑے ہونے پر زیادہ مستحکم جی پی ایس",
+    "اسٹیک آؤٹ کے لیے نئی پُرسکون آواز"
+  ]
+}

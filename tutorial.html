@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'; upgrade-insecure-requests"><meta name="referrer" content="strict-origin-when-cross-origin"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="description" content="Land Survo video tutorial — every feature in 8 short chapters.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Land Survo — Complete Video Tutorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Nastaliq+Urdu:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--bg:#0A1210;--slate:#0F1A17;--ink:#EAF4EE;--ink2:#9FB5A8;--em:#3BFF9E;--em2:#1E9E5A;--cy:#00E5FF;--gold:#E2A72E;
+  --f:"Manrope","Segoe UI",Roboto,Arial,sans-serif;--ur:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq","Urdu Typesetting",serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#050807;color:var(--ink);font-family:var(--f);-webkit-font-smoothing:antialiased}
+body{display:grid;place-items:center;min-height:100%}
+#player{width:min(100vw,calc((100vh - 64px)*16/9));max-width:100%;user-select:none}
+#player.clean{width:min(100vw,calc(100vh*16/9))}
+#frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:14px;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+#player.clean #frame{border-radius:0;cursor:none}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;
+  background:radial-gradient(1200px 800px at 78% 40%,rgba(30,158,90,.22),transparent 60%),radial-gradient(900px 700px at 10% 100%,rgba(0,229,255,.10),transparent 60%),linear-gradient(160deg,#0C1714,#081010 60%,#050A09)}
+#bgimg{position:absolute;inset:-40px;background-size:cover;background-position:center;opacity:.14;filter:blur(3px) saturate(.9)}
+#bggrid{position:absolute;inset:0;background-image:linear-gradient(rgba(59,255,158,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,255,158,.05) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at 60% 50%,#000 30%,transparent 80%)}
+
+/* ---------- left narration panel ---------- */
+#left{position:absolute;left:110px;top:90px;width:800px;bottom:70px}
+.brand{display:flex;align-items:center;gap:14px;font:800 22px/1 var(--f);letter-spacing:.02em}
+.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#34E79F,#137A43);display:grid;place-items:center;box-shadow:0 0 30px rgba(52,231,159,.35)}
+.brand small{display:block;font:700 13px/1 var(--mono);color:var(--em);letter-spacing:.18em;margin-top:6px}
+#chNo{margin-top:58px;font:700 18px/1 var(--mono);letter-spacing:.2em;color:var(--em)}
+#chNo i{display:inline-block;width:40px;height:2px;background:var(--em);vertical-align:middle;margin-right:14px;box-shadow:0 0 12px var(--em)}
+#chTitle{margin:18px 0 0;font:800 62px/1.04 var(--f);letter-spacing:-.025em;max-width:780px;text-wrap:balance}
+#chUr{margin-top:10px;font:700 30px/2 var(--ur);color:#BFE9D3;direction:rtl;text-align:left}
+#steps{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:10px;max-width:760px}
+#steps li{display:flex;gap:14px;align-items:flex-start;font:600 20px/1.4 var(--f);color:#6F877A;transition:color .35s}
+#steps li b{flex:0 0 30px;height:30px;border-radius:9px;display:grid;place-items:center;font:700 14px/1 var(--mono);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#6F877A;transition:all .35s}
+#steps li.done{color:#9FB5A8}#steps li.done b{background:rgba(59,255,158,.12);color:var(--em);border-color:rgba(59,255,158,.3)}
+#steps li.on{color:#fff}#steps li.on b{background:var(--em);color:#04140C;border-color:var(--em);box-shadow:0 0 18px rgba(59,255,158,.6)}
+#sub{position:absolute;left:0;right:20px;bottom:0;padding:20px 26px;border-radius:20px;background:rgba(8,20,16,.72);border:1px solid rgba(59,255,158,.22);backdrop-filter:blur(10px);box-shadow:0 20px 50px -20px rgba(0,0,0,.8)}
+#subEn{font:700 27px/1.35 var(--f);color:#fff}
+#subUr{font:600 24px/2.1 var(--ur);color:#A9E8C9;direction:rtl;text-align:right;margin-top:4px}
+#sub.flash{animation:subIn .45s ease}
+@keyframes subIn{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+#leftWrap{transition:none}
+
+/* ---------- phone ---------- */
+#phone{position:absolute;left:1280px;top:70px;width:452px;height:940px;border-radius:64px;padding:16px;
+  background:linear-gradient(145deg,#3a4140,#0d0f0f 40%,#1c2120);box-shadow:0 60px 120px -40px rgba(0,0,0,.95),0 0 0 2px #050606,inset 0 0 0 2px rgba(255,255,255,.08),0 0 90px -20px rgba(59,255,158,.25)}
+#phone::before{content:"";position:absolute;right:-5px;top:210px;width:5px;height:96px;border-radius:0 4px 4px 0;background:#1f2423}
+#phone::after{content:"";position:absolute;right:-5px;top:330px;width:5px;height:60px;border-radius:0 4px 4px 0;background:#1f2423}
+#screen{position:relative;width:420px;height:908px;border-radius:48px;overflow:hidden;background:#0c120f;isolation:isolate}
+#map{position:absolute;inset:0;width:420px;height:908px}
+#ui{position:absolute;inset:0;font-family:var(--f);color:#122019}
+#ui>*{position:absolute}
+.ov{opacity:0;visibility:hidden;will-change:opacity,transform}
+.status{left:0;right:0;top:0;height:40px;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,0));display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:700 14px/1 var(--f);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);z-index:5}
+.status .r{display:flex;gap:6px;align-items:center}
+.punch{left:50%;top:10px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:#000;z-index:6}
+.wcard{background:rgba(255,255,255,.96);border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.tbar{left:14px;right:14px;top:44px;height:50px;border-radius:999px;display:flex;align-items:center;justify-content:space-around}
+.tbar svg,.bbar svg{width:23px;height:23px;color:#1d2a22}
+.bbar{left:14px;right:14px;top:832px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:space-around}
+#area{left:14px;top:104px;width:262px;padding:9px 13px}
+#area small{display:block;font:800 10px/1.2 var(--f);letter-spacing:.12em;color:#5c7366;text-transform:uppercase}
+#area b{display:block;font:800 19px/1.25 var(--f);color:#122019}
+#area span{display:block;font:700 12px/1.35 var(--mono);color:#3f5a4b}
+#cmp{right:14px;top:104px;width:118px;height:42px;display:flex;align-items:center;gap:8px;padding:0 10px}
+#cmp .nd{width:26px;height:26px;border-radius:50%;background:#122019;display:grid;place-items:center;flex-shrink:0}
+#cmp b{font:800 14px/1 var(--mono)}#cmp small{display:block;font:800 8.5px/1.2 var(--f);letter-spacing:.08em;color:#1E9E5A}
+#gps{right:14px;top:152px;width:118px;height:58px;display:grid;place-items:center;align-content:center;gap:3px}
+#gps b{font:800 15px/1 var(--mono)}#gps small{font:800 8.5px/1 var(--f);letter-spacing:.1em;color:#1E9E5A}
+.rbtn{width:48px;height:48px;border-radius:15px;display:grid;place-items:center}
+#cbtn{left:354px;top:356px}
+#snapB{left:354px;top:416px}
+#snapB.on{background:#1E9E5A;color:#fff}#snapB.on svg{color:#fff}
+#snapB svg,#cbtn svg{width:24px;height:24px;color:#1d2a22}
+#fab{left:324px;top:734px;width:72px;height:72px;border-radius:22px;background:#1E9E5A;color:#fff;display:grid;place-items:center;align-content:center;gap:1px;font:800 10px/1 var(--f);letter-spacing:.06em;box-shadow:0 10px 24px rgba(10,60,30,.45)}
+#fab svg{width:28px;height:28px}
+#toast{left:50%;top:232px;transform:translateX(-50%);white-space:nowrap;padding:10px 16px;border-radius:999px;background:rgba(14,22,18,.92);color:#fff;font:700 13px/1 var(--f)}
+#toast2{left:20px;right:20px;top:232px;padding:12px 14px;border-radius:14px;background:rgba(14,22,18,.94);color:#fff;font:700 12.5px/1.4 var(--f)}
+#toast2 i{font-style:normal;color:var(--em);font-family:var(--mono)}
+.sheet{left:10px;right:10px;border-radius:26px;background:rgba(255,255,255,.98);box-shadow:0 -10px 40px rgba(0,0,0,.35);padding:16px 18px}
+.sheet h4{margin:0 0 10px;font:800 16px/1.2 var(--f);color:#122019;display:flex;justify-content:space-between;align-items:center}
+.sheet h4 small{font:700 11px/1 var(--mono);color:#5c7366}
+.grab{width:42px;height:5px;border-radius:5px;background:#d5ddd8;margin:-6px auto 12px}
+#tray{top:560px;height:262px}
+.lopts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.lopt{border-radius:16px;border:2px solid #e2e8e4;padding:8px;text-align:center;font:800 12.5px/1 var(--f);color:#122019}
+.lopt i{display:block;height:74px;border-radius:11px;margin-bottom:8px;background-size:cover;background-position:center}
+.lopt.sel{border-color:#1E9E5A;box-shadow:0 0 0 3px rgba(30,158,90,.18)}
+#pal{top:636px;height:186px}
+.tabs{display:flex;gap:8px;align-items:center}
+.tab{padding:8px 16px;border-radius:999px;background:#eef3f0;font:800 12.5px/1 var(--f);color:#3f5a4b}
+.tab.on{background:#122019;color:#fff}
+.pdn{margin-left:auto;padding:8px 14px;border-radius:999px;background:#1E9E5A;color:#fff;font:800 12.5px/1 var(--f)}
+.sw{display:flex;gap:9px;margin-top:16px}
+.sw i{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #cfd8d3;transition:transform .2s}
+.sw i.on{transform:scale(1.15);box-shadow:0 0 0 3px #122019}
+.sl{margin-top:18px;display:flex;align-items:center;gap:12px;font:800 11px/1 var(--mono);color:#5c7366}
+.sl .tr{flex:1;height:8px;border-radius:8px;background:linear-gradient(90deg,rgba(255,213,79,.1),#FFD54F);position:relative}
+.sl .kn{position:absolute;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+#imp{top:452px;height:370px}
+.frow{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;border:1.5px solid #e6ece8;margin-bottom:9px}
+.frow .fi{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font:800 10px/1 var(--mono);color:#fff}
+.frow b{display:block;font:800 14px/1.2 var(--f);color:#122019}.frow small{font:700 11px/1.3 var(--mono);color:#5c7366}
+.frow.sel{border-color:#1E9E5A;background:#effaf3}
+.prog{height:8px;border-radius:8px;background:#e6ece8;overflow:hidden;margin-top:6px}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1E9E5A,#3BFF9E)}
+#impSt{font:700 11.5px/1.4 var(--mono);color:#1E9E5A;margin-top:8px}
+#info{top:612px;height:210px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv div{background:#f2f6f4;border-radius:12px;padding:9px 11px}.kv small{display:block;font:800 9.5px/1.2 var(--f);letter-spacing:.1em;color:#5c7366;text-transform:uppercase}.kv b{font:800 15px/1.3 var(--f);color:#122019}
+#lay{top:560px;height:262px}
+.lrow{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid #edf1ee;font:700 13.5px/1.2 var(--f);color:#122019}
+.lrow small{margin-left:auto;font:700 11px/1 var(--mono);color:#5c7366}
+.tg{width:42px;height:24px;border-radius:24px;background:#1E9E5A;position:relative;flex-shrink:0;transition:background .2s}.tg::after{content:"";position:absolute;top:3px;left:21px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s}
+.tg.off{background:#c6d0ca}.tg.off::after{left:3px}
+#pinpop{left:60px;right:60px;top:560px;padding:14px 16px;border-radius:20px}
+#pinpop b{font:800 15px/1.2 var(--f)}#pinpop small{display:block;font:700 11px/1.4 var(--mono);color:#5c7366;margin-top:2px}
+.gbtn{margin-top:12px;padding:12px;border-radius:14px;background:#1E9E5A;color:#fff;text-align:center;font:800 14px/1 var(--f)}
+#stake{top:600px;height:222px;background:rgba(12,22,18,.95);color:#fff}
+#stake.ok{background:rgba(16,92,52,.96)}
+#stake .big{display:flex;align-items:flex-end;gap:12px}
+#stake .big b{font:800 64px/0.9 var(--mono);letter-spacing:-.04em}
+#stake .big span{font:800 18px/1.2 var(--f);color:#9FE3BD;padding-bottom:6px}
+#stake .arr{margin-left:auto;width:66px;height:66px;border-radius:50%;background:rgba(59,255,158,.14);border:2px solid rgba(59,255,158,.5);display:grid;place-items:center}
+#stake .arr svg{width:34px;height:34px;color:var(--em)}
+#stake small{font:700 11.5px/1.4 var(--mono);color:#9FB5A8}
+.wave{display:flex;gap:4px;align-items:center;height:34px;margin-top:10px}
+.wave i{width:5px;border-radius:5px;background:var(--em);height:6px}
+#vb{top:230px;left:22px;right:22px;padding:12px 14px;border-radius:16px;background:rgba(10,18,15,.92);border:1px solid rgba(59,255,158,.45);color:#fff;display:flex;gap:12px;align-items:center}
+#vb .sp{width:34px;height:34px;border-radius:50%;background:var(--em);display:grid;place-items:center;flex-shrink:0}
+#vb b{display:block;font:800 15px/1.25 var(--f)}#vb span{display:block;font:600 14px/1.9 var(--ur);color:#A9E8C9;direction:rtl;text-align:right}
+#exp{top:546px;height:276px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.eo{border:1.5px solid #e2e8e4;border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;font:800 14px/1.2 var(--f);color:#122019}
+.eo small{display:block;font:700 10.5px/1.3 var(--mono);color:#5c7366}
+.eo .fi{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font:800 9.5px/1 var(--mono);color:#fff;flex-shrink:0}
+.eo.sel{border-color:#1E9E5A;background:#effaf3}
+#dlg{left:30px;right:30px;top:316px;padding:20px;border-radius:24px}
+#dlg h5{margin:0;font:800 17px/1.2 var(--f)}#dlg p{margin:4px 0 12px;font:600 12px/1.4 var(--f);color:#5c7366}
+.inp{border:2px solid #1E9E5A;border-radius:12px;padding:12px;font:700 14px/1 var(--mono);color:#122019;min-height:44px}
+.inp .cur{display:inline-block;width:2px;height:16px;background:#1E9E5A;vertical-align:-3px;margin-left:1px;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+.brow{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+.brow span{padding:11px 18px;border-radius:12px;font:800 13.5px/1 var(--f)}
+.brow .c{color:#5c7366}.brow .s{background:#1E9E5A;color:#fff}
+#splash{inset:0;background:radial-gradient(circle at 50% 42%,#1b4a33,#0a1912 70%);display:grid;place-items:center;align-content:center;gap:14px;color:#fff;text-align:center;z-index:8}
+#splash .lg{width:110px;height:110px;border-radius:32px;background:linear-gradient(135deg,#34E79F,#137A43);display:grid;place-items:center;margin:0 auto;box-shadow:0 0 60px rgba(52,231,159,.45)}
+#splash b{font:800 34px/1 var(--f);letter-spacing:-.01em}#splash small{font:700 12px/1 var(--mono);letter-spacing:.2em;color:#9FE3BD}
+#lic{inset:0;background:linear-gradient(180deg,#f4f8f6,#e6efe9);z-index:7;padding:70px 26px 0;color:#122019}
+#lic .lg{width:70px;height:70px;border-radius:22px;background:linear-gradient(135deg,#2BC772,#137A43);display:grid;place-items:center;margin-bottom:18px}
+#lic h3{margin:0;font:800 27px/1.1 var(--f)}#lic p{font:600 14px/1.5 var(--f);color:#566A5E;margin:8px 0 22px}
+#lic .lb{font:800 10.5px/1 var(--f);letter-spacing:.12em;color:#5c7366;text-transform:uppercase;margin:16px 0 8px}
+#lic .dev{font:700 15px/1 var(--mono);padding:13px;border-radius:12px;background:#fff;border:1.5px dashed #b9c9bf}
+#lic .act{margin-top:20px;padding:16px;border-radius:16px;background:#1E9E5A;color:#fff;text-align:center;font:800 16px/1 var(--f);display:flex;justify-content:center;gap:10px;align-items:center}
+#lic .spin{width:18px;height:18px;border-radius:50%;border:3px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+#licOk{margin-top:20px;padding:18px;border-radius:18px;background:#fff;border:2px solid #1E9E5A;display:flex;gap:14px;align-items:center}
+#licOk .ck{width:48px;height:48px;border-radius:50%;background:#1E9E5A;display:grid;place-items:center;flex-shrink:0}
+#licOk b{display:block;font:800 17px/1.2 var(--f)}#licOk small{display:block;font:700 11.5px/1.5 var(--mono);color:#566A5E;margin-top:3px}
+#spot{inset:0;pointer-events:none;z-index:4}
+
+/* ---------- stage overlays ---------- */
+#ovl{position:absolute;inset:0;width:1920px;height:1080px;pointer-events:none;overflow:visible}
+#mag{display:none;position:absolute;width:280px;height:280px;border-radius:50%;pointer-events:none;box-shadow:0 0 0 3px var(--em),0 0 40px rgba(59,255,158,.5),0 30px 60px -20px rgba(0,0,0,.9);background:#000}
+.co{position:absolute;padding:12px 16px;border-radius:14px;background:rgba(8,22,18,.9);border:1px solid rgba(59,255,158,.55);color:#fff;font:800 19px/1.3 var(--f);box-shadow:0 0 30px -6px rgba(59,255,158,.5);white-space:nowrap}
+.co small{display:block;font:600 17px/1.9 var(--ur);color:#A9E8C9;direction:rtl;text-align:right}
+#pdf{position:absolute;left:110px;top:56px;width:780px;height:968px;border-radius:10px;background:#fff;color:#122019;padding:34px 40px;box-shadow:0 40px 100px -20px rgba(0,0,0,.9);transform-origin:70% 50%;opacity:0;visibility:hidden;font-family:var(--f)}
+#pdf .hd{display:flex;align-items:center;gap:14px;border-bottom:3px solid #1E9E5A;padding-bottom:14px}
+#pdf .hd .logo{width:44px;height:44px;border-radius:12px;box-shadow:none}
+#pdf .hd b{font:800 24px/1.1 var(--f)}#pdf .hd small{display:block;font:700 12px/1.3 var(--mono);color:#566A5E}
+#pdf .hd .r{margin-left:auto;text-align:right;font:700 12px/1.5 var(--mono);color:#566A5E}
+#pdf .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+#pdf .meta div{background:#f2f6f4;border-radius:8px;padding:8px 10px}#pdf .meta small{display:block;font:800 9px/1.2 var(--f);letter-spacing:.1em;color:#5c7366;text-transform:uppercase}#pdf .meta b{font:800 14px/1.3 var(--f)}
+#pdf canvas{display:block;width:700px;height:270px;border-radius:8px;border:1px solid #dfe7e2}
+#pdf h6{margin:14px 0 6px;font:800 12px/1 var(--f);letter-spacing:.12em;text-transform:uppercase;color:#1E9E5A}
+#pdf table{width:100%;border-collapse:collapse;font:600 12.5px/1.35 var(--mono)}
+#pdf th{text-align:left;font:800 10.5px/1.2 var(--f);letter-spacing:.06em;color:#5c7366;background:#f2f6f4;padding:6px 8px;text-transform:uppercase}
+#pdf td{padding:5px 8px;border-bottom:1px solid #edf1ee}
+#pdf .sec{border-radius:8px;transition:box-shadow .3s,background .3s;padding:2px 4px;margin:0 -4px}
+#pdf .sec.hi{box-shadow:0 0 0 3px #3BFF9E,0 0 30px rgba(59,255,158,.45);background:rgba(59,255,158,.05)}
+#pdf .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#pdf .ft{position:absolute;left:40px;right:40px;bottom:18px;display:flex;justify-content:space-between;font:700 10.5px/1 var(--mono);color:#8aa093}
+#card{position:absolute;inset:0;pointer-events:none}
+#outro{position:absolute;inset:0;opacity:0;visibility:hidden;display:grid;place-items:center;align-content:center;text-align:center;
+  background:radial-gradient(900px 600px at 50% 45%,rgba(30,158,90,.35),transparent 70%),linear-gradient(160deg,#0C1714,#050A09)}
+#outro .lg{width:150px;height:150px;border-radius:42px;margin:0 auto;background:linear-gradient(135deg,#34E79F,#137A43);display:grid;place-items:center;box-shadow:0 0 90px rgba(52,231,159,.5)}
+#outro h2{margin:34px 0 0;font:800 104px/1 var(--f);letter-spacing:-.03em}
+#outro h2 em{font-style:normal;background:linear-gradient(90deg,#5BF0A2,#C7F27A);-webkit-background-clip:text;background-clip:text;color:transparent}
+#outro p{margin:18px 0 0;font:600 30px/1.4 var(--f);color:#BFD3C6}
+#outro .ur{font:700 30px/2 var(--ur);color:#A9E8C9;margin-top:6px}
+#outro .cta{display:flex;gap:22px;justify-content:center;margin-top:40px}
+#outro .b{display:flex;align-items:center;gap:16px;padding:20px 30px;border-radius:22px;font:800 24px/1.1 var(--f);text-align:left}
+#outro .b small{display:block;font:700 15px/1.2 var(--mono);opacity:.8}
+#outro .a{background:#1E9E5A;color:#fff;box-shadow:0 20px 50px -14px rgba(30,158,90,.9)}
+#outro .i{border:2px dashed rgba(226,167,46,.7);color:#fff}
+#outro .i em{font-style:normal;margin-left:8px;padding:6px 10px;border-radius:999px;background:var(--gold);color:#3A2700;font:800 13px/1 var(--f);letter-spacing:.08em}
+#outro .ct{margin-top:46px;font:700 22px/1.5 var(--mono);color:#9FB5A8}
+#outro .ct b{color:#fff}
+
+/* chapter wipe */
+#wipe{position:absolute;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,var(--em),var(--cy));box-shadow:0 0 20px var(--em)}
+
+/* ---------- poster & controls ---------- */
+#poster{position:absolute;inset:0;display:grid;place-items:center;background:rgba(3,8,6,.55);cursor:pointer;transition:opacity .3s}
+#poster.hide{opacity:0;pointer-events:none}
+#poster .pb{width:120px;height:120px;border-radius:50%;background:rgba(30,158,90,.92);display:grid;place-items:center;box-shadow:0 0 0 12px rgba(59,255,158,.15),0 20px 60px rgba(0,0,0,.6)}
+#poster .pt{position:absolute;bottom:9%;font:800 clamp(14px,2vw,26px)/1.3 var(--f);text-align:center;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+#poster .pt small{display:block;font:700 clamp(10px,1.1vw,14px)/1.5 var(--mono);color:var(--em);letter-spacing:.14em}
+#ctl{margin-top:10px;padding:10px 14px;border-radius:14px;background:#0E1714;border:1px solid rgba(255,255,255,.07);display:grid;gap:10px}
+#player.clean #ctl{display:none}
+#bar{position:relative;height:22px;cursor:pointer;display:flex;gap:3px;align-items:center}
+#bar .seg{position:relative;height:6px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden;flex-shrink:0;transition:height .15s}
+#bar:hover .seg{height:9px}
+#bar .seg i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--em2),var(--em))}
+#bar .seg.cur{background:rgba(59,255,158,.18)}
+#tip{position:absolute;bottom:26px;transform:translateX(-50%);padding:6px 10px;border-radius:8px;background:#000;font:700 12px/1.2 var(--f);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+#bar:hover #tip{opacity:1}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cb{height:38px;min-width:38px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font:700 13px/1 var(--f);display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.cb:hover{background:rgba(255,255,255,.12)}
+.cb.pr{background:var(--em2);border-color:var(--em2)}
+.cb svg{width:18px;height:18px}
+#time{font:700 13px/1 var(--mono);color:#9FB5A8;margin-left:6px}
+#chLbl{font:700 13px/1.2 var(--f);color:#cfe;margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:32vw}
+.sp1{margin-left:auto}
+#hint{position:fixed;left:50%;top:20px;transform:translateX(-50%);padding:10px 16px;border-radius:999px;background:rgba(0,0,0,.8);color:#fff;font:700 13px/1 var(--f);opacity:0;transition:opacity .4s;pointer-events:none;z-index:9}
+@media (max-width:480px){#bRst,#bMus{display:none}}
+@media (max-width:700px){#chLbl{display:none}.cb{height:34px;min-width:34px;padding:0 9px;font-size:12px}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+<div id="player">
+  <div id="frame">
+    <div id="stage">
+      <div id="bgimg"></div><div id="bggrid"></div>
+      <div id="left">
+        <div class="brand"><span class="logo"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#04140C" stroke-width="2.4" stroke-linejoin="round"><path d="M4 7l7-3 9 4-2 11-10 1z"/><circle cx="11" cy="11" r="2" fill="#04140C" stroke="none"/></svg></span><div>Land Survo<small>VIDEO TUTORIAL · ANDROID</small></div></div>
+        <div id="chNo"><i></i>CHAPTER 01 / 08</div>
+        <h1 id="chTitle"></h1>
+        <div id="chUr"></div>
+        <ol id="steps"></ol>
+        <div id="sub"><div id="subEn"></div><div id="subUr"></div></div>
+      </div>
+      <div id="pdf">
+        <div class="hd"><span class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#04140C" stroke-width="2.4" stroke-linejoin="round"><path d="M4 7l7-3 9 4-2 11-10 1z"/></svg></span><div><b>Land Survey Report</b><small>Generated by Land Survo v4.5</small></div><div class="r">22 Nov 2026 · 10:31<br>Report #LS-0472</div></div>
+        <div class="meta"><div><small>Mouza</small><b>Shah Wala</b></div><div><small>Tehsil</small><b>Layyah</b></div><div><small>Murabba / Killa</small><b>47 / 12</b></div><div><small>Surveyed by</small><b>M. Waqas Nazir</b></div></div>
+        <div class="sec" data-s="0"><canvas id="pdfMap" width="1400" height="540"></canvas></div>
+        <div class="sec" data-s="1"><h6>Area (Raqba)</h6>
+          <table><tr><th>Kanal</th><th>Marla</th><th>Acre</th><th>Square feet</th><th>Perimeter</th></tr><tr id="pdfArea"></tr></table></div>
+        <div class="two">
+          <div class="sec" data-s="2"><h6>Corner coordinates (WGS-84)</h6><table id="pdfCorners"></table></div>
+          <div class="sec" data-s="3"><h6>Sides &amp; distances</h6><table id="pdfSides"></table></div>
+        </div>
+        <div class="ft"><span>landsurvo · precision land measurement</span><span>Page 1 / 1</span></div>
+      </div>
+      <div id="phone"><div id="screen">
+        <canvas id="map" width="840" height="1816"></canvas>
+        <div id="ui">
+          <div class="status"><span>10:24</span><span class="r"><svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#fff"/><rect x="2.5" y="2.5" width="15" height="7" rx="1.5" fill="#fff"/><rect x="23.5" y="4" width="2" height="4" rx="1" fill="#fff"/></svg></span></div>
+          <div class="punch"></div>
+          <div class="tbar wcard ov" data-g="chrome"></div>
+          <div id="area" class="wcard ov"><small id="aL">Raqba</small><b id="aM">—</b><span id="aS"></span></div>
+          <div id="cmp" class="wcard ov" data-g="chrome"><span class="nd"><svg id="cmpN" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2l4 10h-8z" fill="#E53935"/><path d="M12 22l-4-10h8z" fill="#fff"/></svg></span><div><b id="cmpD">0.0°</b><small id="cmpS">TRUE NORTH · LOCK</small></div></div>
+          <div id="gps" class="wcard ov" data-g="chrome"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E9E5A" stroke-width="2.2"><rect x="9" y="9" width="6" height="6" transform="rotate(45 12 12)"/><path d="M4 9l3-3 3 3-3 3zM14 19l3-3 3 3-3 3"/></svg><b id="gpsA">±12.0 m</b><small id="gpsS">GNSS</small></div>
+          <div id="cbtn" class="wcard rbtn ov"><svg viewBox="0 0 24 24"><g id="cbN"><path d="M12 3l4 9h-8z" fill="#E53935"/><path d="M12 21l-4-9h8z" fill="#9aa"/></g></svg></div>
+          <div id="snapB" class="wcard rbtn ov" data-g="chrome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 4v7a6 6 0 0 0 12 0V4"/><path d="M6 4h3v7a3 3 0 0 0 6 0V4h3"/><path d="M4 21l3-3M20 21l-3-3"/></svg></div>
+          <div id="fab" class="ov" data-g="chrome"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>PIN</div>
+          <div class="bbar wcard ov" data-g="chrome"></div>
+          <div id="toast" class="ov"></div>
+          <div id="toast2" class="ov"></div>
+          <div id="tray" class="sheet ov"><div class="grab"></div><h4>Map layer <small>tap to switch</small></h4><div class="lopts"><div class="lopt" id="lo0"><i class="ls"></i>Satellite</div><div class="lopt" id="lo1"><i class="lm"></i>Map</div><div class="lopt" id="lo2"><i class="lh"></i>Hybrid</div></div></div>
+          <div id="pal" class="sheet ov"><div class="tabs"><span class="tab" id="tbL">Line</span><span class="tab" id="tbF">Fill</span><span class="pdn" id="pdone">✓ Done</span></div><div class="sw" id="sw"></div><div class="sl">OPACITY<div class="tr" id="trk"><i class="kn" id="kn"></i></div><b id="opv">20%</b></div></div>
+          <div id="imp" class="sheet ov"><div class="grab"></div><h4>Import file <small>Documents › Land Survo</small></h4>
+            <div class="frow" id="fr0"><span class="fi" style="background:#1E9E5A">KML</span><div><b>Mouza_ShahWala.kml</b><small>3,025 killas · 2.1 MB</small></div></div>
+            <div class="frow"><span class="fi" style="background:#0E7490">KMZ</span><div><b>Chak_148_TDA.kmz</b><small>1,240 killas · 0.9 MB</small></div></div>
+            <div class="frow"><span class="fi" style="background:#7C3AED">MMP</span><div><b>Field_Survey_Nov.mmp</b><small>18 polygons · 64 pins</small></div></div>
+            <div class="prog"><i id="impP"></i></div><div id="impSt">Ready</div></div>
+          <div id="info" class="sheet ov"><h4><span id="infT">Killa 47/13</span><small>Mouza_ShahWala.kml</small></h4><div class="kv"><div><small>Raqba</small><b>8 Kanal 0.2 Marla</b></div><div><small>Acre</small><b>1.000 Acre</b></div><div><small>Sides</small><b>198 × 220 ft</b></div><div><small>Corners</small><b>4 · closed</b></div></div></div>
+          <div id="lay" class="sheet ov"><div class="grab"></div><h4>Layers <small>3 active</small></h4>
+            <div class="lrow"><span class="tg"></span>Mouza_ShahWala.kml<small>3,025</small></div>
+            <div class="lrow"><span class="tg" id="tgS"></span>My survey<small>1 polygon</small></div>
+            <div class="lrow"><span class="tg"></span>Satellite imagery<small>base</small></div></div>
+          <div id="pinpop" class="wcard ov"><b>Pin 2 · Burji</b><small>30.96932° N, 70.94291° E</small><div class="gbtn" id="ppgo">▶ Start Stakeout</div></div>
+          <div id="vb" class="ov"><span class="sp"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#04140C" stroke-width="2.4" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></svg></span><div style="flex:1"><b id="vbE"></b><span id="vbU"></span></div></div>
+          <div id="stake" class="sheet ov"><div class="big"><b id="stD">39.0</b><span>ft<br><small id="stDir">to target · NE</small></span><span class="arr"><svg id="stArr" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l7 18-7-4-7 4z"/></svg></span></div><small id="stB">Bearing 45.0° · Pin 2 · Burji</small><div class="wave" id="wave"></div></div>
+          <div id="exp" class="sheet ov"><div class="grab"></div><h4>Export <small>all layers · one file</small></h4><div class="eg">
+            <div class="eo" id="eo0"><span class="fi" style="background:#1E9E5A">KML</span><div>KML<small>Google Earth</small></div></div>
+            <div class="eo" id="eo1"><span class="fi" style="background:#0E7490">KMZ</span><div>KMZ<small>compressed</small></div></div>
+            <div class="eo" id="eo2"><span class="fi" style="background:#7C3AED">MMP</span><div>.MMP<small>Land Survo</small></div></div>
+            <div class="eo" id="eo3"><span class="fi" style="background:#DC2626">PDF</span><div>PDF report<small>full survey</small></div></div></div></div>
+          <div id="dlg" class="wcard ov"><h5>Save PDF report</h5><p>File name — saved to Documents › Land Survo</p><div class="inp"><span id="fname"></span><span class="cur"></span></div><div class="brow"><span class="c">Cancel</span><span class="s" id="dsave">Save</span></div></div>
+          <div id="lic" class="ov"><div class="lg"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><path d="M4 7l7-3 9 4-2 11-10 1z"/></svg></div><h3>Activate Land Survo</h3><p>Enter your personal key once. Activation works fully offline.</p>
+            <div class="lb">Device ID</div><div class="dev">LSD-8F2A-11C9-4E07</div><div class="lb">Activation key</div><div class="inp"><span id="lkey"></span><span class="cur"></span></div>
+            <div class="act" id="lact">Activate</div>
+            <div id="licOk" class="ov"><span class="ck"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5 9-10"/></svg></span><div><b>Full version active</b><small>Offline · locked to this device<br>Valid till 22 Nov 2027</small></div></div></div>
+          <div id="splash" class="ov"><div class="lg"><svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#04140C" stroke-width="2.2" stroke-linejoin="round"><path d="M4 7l7-3 9 4-2 11-10 1z"/><circle cx="11" cy="11" r="2" fill="#04140C" stroke="none"/></svg></div><b>Land Survo</b><small>PRECISION LAND MEASUREMENT</small></div>
+          <div id="spot" class="ov"></div>
+        </div>
+      </div></div>
+      <canvas id="mag" width="560" height="560" class="ovs"></canvas>
+      <svg id="ovl" viewBox="0 0 1920 1080"></svg>
+      <div id="cos"></div>
+      <div id="outro"><div class="lg"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#04140C" stroke-width="2.2" stroke-linejoin="round"><path d="M4 7l7-3 9 4-2 11-10 1z"/><circle cx="11" cy="11" r="2" fill="#04140C" stroke="none"/></svg></div>
+        <h2>Land Survo · <em>Measure precisely.</em></h2><p>Pins, snap, raqba, KML, stakeout and PDF reports — in one Android app.</p><div class="ur">اپنی زمین کی درست پیمائش — ایک ہی ایپ میں</div>
+        <div class="cta"><div class="b a"><svg width="40" height="40" viewBox="0 0 24 24" fill="#fff"><path d="M6 10.5h12V18a1.5 1.5 0 0 1-1.5 1.5H15V22a1.2 1.2 0 0 1-2.4 0v-2.5h-1.2V22A1.2 1.2 0 0 1 9 22v-2.5H7.5A1.5 1.5 0 0 1 6 18zM3.8 10.6a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zm14 0a1.2 1.2 0 0 1 2.4 0v5a1.2 1.2 0 0 1-2.4 0zM6.1 9.6a6 6 0 0 1 3.1-4.6L8.1 3.2a.4.4 0 0 1 .7-.4L10 4.7a6.3 6.3 0 0 1 4 0l1.2-1.9a.4.4 0 0 1 .7.4L14.8 5a6 6 0 0 1 3.1 4.6z"/></svg><div>Download for Android<small>APK · Android 8.0+ · v4.5</small></div></div>
+          <div class="b i"><svg width="36" height="36" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7a4.5 4.5 0 0 0-3.5-1.9c-1.5-.2-2.9.9-3.6.9s-1.9-.9-3.1-.8a4.7 4.7 0 0 0-4 2.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4a10 10 0 0 0 1.3-2.7 4.2 4.2 0 0 1-2.5-4zM14 5.4a4.2 4.2 0 0 0 1-3.1 4.3 4.3 0 0 0-2.8 1.5 4 4 0 0 0-1 3 3.6 3.6 0 0 0 2.8-1.4z"/></svg><div>iOS<em>COMING SOON</em><small>iPhone &amp; iPad</small></div></div></div>
+        <div class="ct">Developed by <b>Muhammad Waqas Nazir</b> · Layyah, Pakistan · WhatsApp <b>0301-9289330</b></div></div>
+      <div id="wipe"></div>
+    </div>
+    <div id="poster"><div class="pb"><svg width="52" height="52" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div><div class="pt"><small>LAND SURVO · FULL TUTORIAL · 8 CHAPTERS · 🔊 SOUND ON</small>Every feature, step by step</div></div>
+  </div>
+  <div id="ctl">
+    <div id="bar"><span id="tip"></span></div>
+    <div class="row">
+      <button class="cb" id="bPrev" title="Previous chapter (←)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+      <button class="cb pr" id="bPlay" title="Play / Pause (Space)"><svg id="icPlay" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="cb" id="bNext" title="Next chapter (→)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+      <span id="time">0:00 / 0:00</span><span id="chLbl"></span>
+      <button class="cb sp1" id="bSnd" title="Sound on/off (M)"><svg id="icSnd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></svg></button><button class="cb" id="bVoice" title="Narration voice">Voice: EN</button><button class="cb" id="bMus" title="Background music">♪ Music: On</button><button class="cb" id="bSpd" title="Playback speed">1×</button>
+      <button class="cb" id="bRst" title="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5"/></svg></button>
+      <button class="cb" id="bFs" title="Fullscreen (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <button class="cb" id="bHide" title="Hide controls (H)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="hide-sm">Hide Controls (For Clean Screen Recording)</span></button>
+    </div>
+  </div>
+</div>
+<div id="hint">Controls hidden — press <b>H</b> to show · <b>Space</b> play/pause</div>
+<script src="assets/js/tutorial.js" defer></script>
+</body>
+</html>
